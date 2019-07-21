@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
     TextView remainingTimeLabel;
     Context context;
     CountDownTimer timer;
-    Integer spoolDownTimeInSeconds = 70;
+    Button startButton;
+    Button cancelButton;
+    Integer spoolDownTimeInSeconds = 2 * 60;
     Integer spoolDownTimeInMilliseconds = spoolDownTimeInSeconds * 1000;
 
     @Override
@@ -37,17 +40,24 @@ public class MainActivity extends AppCompatActivity {
 
         countdownProgressBar = findViewById(R.id.countdownProgress);
         remainingTimeLabel = findViewById(R.id.remainingTime);
+        startButton = findViewById(R.id.startButton);
+        cancelButton = findViewById(R.id.cancelButton);
         context = getApplicationContext();
 
+        setDefaultTimeLabel();
+        cancelButton.setVisibility(View.INVISIBLE);
+        countdownProgressBar.setProgress(100, true);
     }
 
     public void startTimer(View v) {
+
+        cancelButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
 
         timer = new CountDownTimer(spoolDownTimeInMilliseconds, 333) {
 
             public void onTick(long millisUntilFinished) {
                 Float progressValue = ((float)millisUntilFinished / spoolDownTimeInMilliseconds);
-                Log.d("Progress", progressValue.toString());
                 countdownProgressBar.setProgress(Math.round(progressValue*100), true);
                 String remainingTimeString = constructRemainingTimeLabel(millisUntilFinished);
                 setRemainingTimeLabel(remainingTimeString);
@@ -59,10 +69,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(context, "Turbos have spooled down!", Toast.LENGTH_LONG).show();
 
             }
-        }.start();
+        };
 
-        countdownProgressBar.setProgress(100, true);
+        timer.start();
 
+    }
+
+    public void cancelTimer(View v) {
+        timer.cancel();
+        setDefaultTimeLabel();
+    }
+
+    private void setDefaultTimeLabel() {
+        String defaultTimerLabel = constructRemainingTimeLabel(spoolDownTimeInMilliseconds);
+        setRemainingTimeLabel(defaultTimerLabel);
     }
 
     private void setRemainingTimeLabel(String remainingTime) {

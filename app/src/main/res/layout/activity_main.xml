@@ -41,7 +41,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:progressTint="#0025FF"
-        app:layout_constraintBottom_toTopOf="@+id/startTimer"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.197" />
 
     <Button
-        android:id="@+id/startTimer"
+        android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -62,5 +62,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countdownProgress" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="113dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="cancelTimer"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countdownProgress"
+        app:layout_constraintVertical_bias="0.308" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
